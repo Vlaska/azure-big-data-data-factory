@@ -84,7 +84,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureDatabricksDeltaLakeDataset1",
+						"referenceName": "raw_data_databricks",
 						"type": "DatasetReference"
 					}
 				]
@@ -186,7 +186,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "suspicious_ips",
+						"referenceName": "suspicious_ips_databricks",
 						"type": "DatasetReference"
 					}
 				],
@@ -240,7 +240,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "cleaned_social_media_data",
+						"referenceName": "cleaned_social_media_data_databricks",
 						"type": "DatasetReference"
 					}
 				],

@@ -1,5 +1,5 @@
 {
-	"name": "AzureDatabricksDeltaLakeDataset1",
+	"name": "raw_data_databricks",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "databricks_storage",

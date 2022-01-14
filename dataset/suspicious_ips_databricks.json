@@ -1,5 +1,5 @@
 {
-	"name": "suspicious_ips",
+	"name": "suspicious_ips_databricks",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "databricks_storage",
