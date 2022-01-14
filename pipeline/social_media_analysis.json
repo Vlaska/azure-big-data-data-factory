@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "social_media_analysis",
 	"properties": {
 		"activities": [
 			{
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow1",
+						"referenceName": "load_data",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -84,7 +84,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureDatabricksDeltaLakeDataset1",
+						"referenceName": "raw_data_databricks",
 						"type": "DatasetReference"
 					}
 				]
@@ -186,13 +186,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "suspicious_ips",
+						"referenceName": "suspicious_ips_databricks",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "suspicois_ips_table_synapse",
+						"referenceName": "suspicious_ips_table_synapse",
 						"type": "DatasetReference"
 					}
 				]
@@ -240,7 +240,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "cleaned_social_media_data",
+						"referenceName": "cleaned_social_media_data_databricks",
 						"type": "DatasetReference"
 					}
 				],

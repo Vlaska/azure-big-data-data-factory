@@ -1,5 +1,5 @@
 {
-	"name": "suspicious_ips",
+	"name": "raw_data_databricks",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "databricks_storage",
@@ -9,14 +9,9 @@
 		"type": "AzureDatabricksDeltaLakeDataset",
 		"typeProperties": {
 			"database": "default",
-			"table": "suspicious_ips"
+			"table": "social_media_log"
 		},
-		"schema": [
-			{
-				"name": "ip",
-				"type": "string"
-			}
-		]
+		"schema": []
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
 }

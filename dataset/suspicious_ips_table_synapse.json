@@ -1,5 +1,5 @@
 {
-	"name": "suspicois_ips_table_synapse",
+	"name": "suspicious_ips_table_synapse",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "social_media_analysis",

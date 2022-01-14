@@ -1,5 +1,5 @@
 {
-	"name": "cleaned_social_media_data",
+	"name": "cleaned_social_media_data_databricks",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "databricks_storage",
