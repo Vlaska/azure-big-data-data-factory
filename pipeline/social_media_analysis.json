@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "social_media_analysis",
 	"properties": {
 		"activities": [
 			{
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow1",
+						"referenceName": "load_data",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -192,7 +192,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "suspicois_ips_table_synapse",
+						"referenceName": "suspicious_ips_table_synapse",
 						"type": "DatasetReference"
 					}
 				]
