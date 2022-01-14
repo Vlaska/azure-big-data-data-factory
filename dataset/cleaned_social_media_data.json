@@ -1,0 +1,38 @@
+{
+	"name": "cleaned_social_media_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "databricks_storage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDatabricksDeltaLakeDataset",
+		"typeProperties": {
+			"database": "default",
+			"table": "social_media_clean"
+		},
+		"schema": [
+			{
+				"name": "IP",
+				"type": "string"
+			},
+			{
+				"name": "Timestamp",
+				"type": "timestamp"
+			},
+			{
+				"name": "Device",
+				"type": "string"
+			},
+			{
+				"name": "Action",
+				"type": "string"
+			},
+			{
+				"name": "Description",
+				"type": "string"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

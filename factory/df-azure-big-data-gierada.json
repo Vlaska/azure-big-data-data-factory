@@ -1,0 +1,9 @@
+{
+	"name": "df-azure-big-data-gierada",
+	"location": "westeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "87dc9b8c-c095-47f2-b906-76b2a2368d90",
+		"tenantId": "eccbc9a0-56ca-4467-bacd-c7b7d36ef395"
+	}
+}

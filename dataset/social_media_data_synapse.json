@@ -1,0 +1,17 @@
+{
+	"name": "social_media_data_synapse",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "social_media_analysis",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "social_media"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,22 @@
+{
+	"name": "suspicious_ips",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "databricks_storage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDatabricksDeltaLakeDataset",
+		"typeProperties": {
+			"database": "default",
+			"table": "suspicious_ips"
+		},
+		"schema": [
+			{
+				"name": "ip",
+				"type": "string"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

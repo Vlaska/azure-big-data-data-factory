@@ -1,0 +1,28 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "source_data",
+						"type": "DatasetReference"
+					},
+					"name": "ingest"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "social_media_data_synapse",
+						"type": "DatasetReference"
+					},
+					"name": "saveRawData"
+				}
+			],
+			"transformations": [],
+			"script": "source(output(\n\t\tTimestamp as string,\n\t\tIP as string,\n\t\tDevice as string,\n\t\tAction as string,\n\t\tDescription as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> ingest\ningest sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tstaged: false,\n\tpreSQLs:['TRUNCATE TABLE dbo.social_media;'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1,\n\terrorHandlingOption: 'stopOnFirstError') ~> saveRawData"
+		}
+	}
+}
