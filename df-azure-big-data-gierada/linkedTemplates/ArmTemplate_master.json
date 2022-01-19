@@ -1,0 +1,84 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "df-azure-big-data-gierada"
+		},
+		"data_processing_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'data_processing'"
+		},
+		"databricks_storage_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'databricks_storage'"
+		},
+		"social_media_analysis_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'social_media_analysis'"
+		},
+		"storage_account_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'storage_account'"
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://gist.githubusercontent.com/Vlaska/be08d353cd22be73b958b391fc033ea0/raw/929b726dc95d944178f9c5251b38d1a6a86f9513/social_network_data.csv"
+		},
+		"storage_account_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://saazurebigdatagierada.dfs.core.windows.net"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "df-azure-big-data-gierada_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"data_processing_accessToken": {
+						"value": "[parameters('data_processing_accessToken')]"
+					},
+					"databricks_storage_accessToken": {
+						"value": "[parameters('databricks_storage_accessToken')]"
+					},
+					"social_media_analysis_connectionString": {
+						"value": "[parameters('social_media_analysis_connectionString')]"
+					},
+					"storage_account_accountKey": {
+						"value": "[parameters('storage_account_accountKey')]"
+					},
+					"HttpServer1_properties_typeProperties_url": {
+						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
+					},
+					"storage_account_properties_typeProperties_url": {
+						"value": "[parameters('storage_account_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "df-azure-big-data-gierada"
+		},
+		"data_processing_accessToken": {
+			"value": ""
+		},
+		"databricks_storage_accessToken": {
+			"value": ""
+		},
+		"social_media_analysis_connectionString": {
+			"value": ""
+		},
+		"storage_account_accountKey": {
+			"value": ""
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"value": "https://gist.githubusercontent.com/Vlaska/be08d353cd22be73b958b391fc033ea0/raw/929b726dc95d944178f9c5251b38d1a6a86f9513/social_network_data.csv"
+		},
+		"storage_account_properties_typeProperties_url": {
+			"value": "https://saazurebigdatagierada.dfs.core.windows.net"
+		}
+	}
+}
