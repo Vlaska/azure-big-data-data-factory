@@ -7,7 +7,28 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlDWTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "Timestamp",
+				"type": "varchar"
+			},
+			{
+				"name": "IP",
+				"type": "varchar"
+			},
+			{
+				"name": "Device",
+				"type": "varchar"
+			},
+			{
+				"name": "Action",
+				"type": "varchar"
+			},
+			{
+				"name": "Description",
+				"type": "varchar"
+			}
+		],
 		"typeProperties": {
 			"schema": "dbo",
 			"table": "social_media"
