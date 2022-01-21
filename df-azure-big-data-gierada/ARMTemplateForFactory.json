@@ -23,10 +23,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'storage_account'"
 		},
-		"HttpServer1_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://gist.githubusercontent.com/Vlaska/be08d353cd22be73b958b391fc033ea0/raw/929b726dc95d944178f9c5251b38d1a6a86f9513/social_network_data.csv"
-		},
 		"storage_account_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://saazurebigdatagierada.dfs.core.windows.net"
@@ -64,12 +60,19 @@
 									"saveRawData": {}
 								}
 							},
-							"staging": {},
+							"staging": {
+								"linkedService": {
+									"referenceName": "storage_account",
+									"type": "LinkedServiceReference"
+								},
+								"folderPath": "stagin"
+							},
 							"compute": {
 								"coreCount": 8,
 								"computeType": "General"
 							},
-							"traceLevel": "Fine"
+							"traceLevel": "Fine",
+							"runConcurrently": false
 						}
 					},
 					{
@@ -231,6 +234,21 @@
 									"type": "LinkedServiceReference"
 								},
 								"path": "stagin/databricks"
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ip",
+											"type": "string"
+										},
+										"sink": {
+											"name": "IP",
+											"type": "String"
+										}
+									}
+								]
 							}
 						},
 						"inputs": [
@@ -288,6 +306,61 @@
 									"type": "LinkedServiceReference"
 								},
 								"path": "stagin/databricks"
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Timestamp",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Timestamp",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IP",
+											"type": "string"
+										},
+										"sink": {
+											"name": "IP",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Device",
+											"type": "string"
+										},
+										"sink": {
+											"name": "Device",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Action",
+											"type": "string"
+										},
+										"sink": {
+											"name": "Action",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Description",
+											"type": "string"
+										},
+										"sink": {
+											"name": "Description",
+											"type": "String"
+										}
+									}
+								]
 							}
 						},
 						"inputs": [
@@ -315,13 +388,13 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/load_data')]",
+				"[concat(variables('factoryId'), '/linkedServices/storage_account')]",
 				"[concat(variables('factoryId'), '/datasets/social_media_data_synapse')]",
 				"[concat(variables('factoryId'), '/datasets/raw_data_databricks')]",
 				"[concat(variables('factoryId'), '/linkedServices/data_processing')]",
 				"[concat(variables('factoryId'), '/datasets/suspicious_ips_databricks')]",
 				"[concat(variables('factoryId'), '/datasets/suspicious_ips_table_synapse')]",
-				"[concat(variables('factoryId'), '/datasets/cleaned_social_media_data_databricks')]",
-				"[concat(variables('factoryId'), '/linkedServices/storage_account')]"
+				"[concat(variables('factoryId'), '/datasets/cleaned_social_media_data_databricks')]"
 			]
 		},
 		{
@@ -398,7 +471,28 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "Timestamp",
+						"type": "varchar"
+					},
+					{
+						"name": "IP",
+						"type": "varchar"
+					},
+					{
+						"name": "Device",
+						"type": "varchar"
+					},
+					{
+						"name": "Action",
+						"type": "varchar"
+					},
+					{
+						"name": "Description",
+						"type": "varchar"
+					}
+				],
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "social_media"
@@ -526,21 +620,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/HttpServer1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "HttpServer",
-				"typeProperties": {
-					"url": "[parameters('HttpServer1_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": false,
-					"authenticationType": "Anonymous"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/data_processing')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -553,13 +632,7 @@
 						"type": "SecureString",
 						"value": "[parameters('data_processing_accessToken')]"
 					},
-					"newClusterNodeType": "Standard_DS3_v2",
-					"newClusterNumOfWorker": "1",
-					"newClusterSparkEnvVars": {
-						"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
-					},
-					"newClusterVersion": "9.1.x-scala2.12",
-					"newClusterInitScripts": []
+					"existingClusterId": "0110-153719-njuctzsg"
 				}
 			},
 			"dependsOn": []
@@ -638,7 +711,7 @@
 						}
 					],
 					"transformations": [],
-					"script": "source(output(\n\t\tTimestamp as string,\n\t\tIP as string,\n\t\tDevice as string,\n\t\tAction as string,\n\t\tDescription as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> ingest\ningest sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tstaged: false,\n\tpreSQLs:['TRUNCATE TABLE dbo.social_media;'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1,\n\terrorHandlingOption: 'stopOnFirstError') ~> saveRawData"
+					"script": "source(output(\n\t\tTimestamp as string,\n\t\tIP as string,\n\t\tDevice as string,\n\t\tAction as string,\n\t\tDescription as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> ingest\ningest sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tTimestamp as string,\n\t\tIP as string,\n\t\tDevice as string,\n\t\tAction as string,\n\t\tDescription as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tstaged: true,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1,\n\terrorHandlingOption: 'stopOnFirstError') ~> saveRawData"
 				}
 			},
 			"dependsOn": [

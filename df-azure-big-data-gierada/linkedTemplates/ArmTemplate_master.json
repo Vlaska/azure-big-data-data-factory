@@ -23,10 +23,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'storage_account'"
 		},
-		"HttpServer1_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://gist.githubusercontent.com/Vlaska/be08d353cd22be73b958b391fc033ea0/raw/929b726dc95d944178f9c5251b38d1a6a86f9513/social_network_data.csv"
-		},
 		"storage_account_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://saazurebigdatagierada.dfs.core.windows.net"
@@ -69,9 +65,6 @@
 					},
 					"storage_account_accountKey": {
 						"value": "[parameters('storage_account_accountKey')]"
-					},
-					"HttpServer1_properties_typeProperties_url": {
-						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
 					},
 					"storage_account_properties_typeProperties_url": {
 						"value": "[parameters('storage_account_properties_typeProperties_url')]"
