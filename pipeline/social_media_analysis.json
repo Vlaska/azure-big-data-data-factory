@@ -19,11 +19,19 @@
 						"referenceName": "load_data",
 						"type": "DataFlowReference"
 					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "storage_account",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "stagin"
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine"
+					"traceLevel": "Fine",
+					"runConcurrently": false
 				}
 			},
 			{
@@ -182,6 +190,21 @@
 							"type": "LinkedServiceReference"
 						},
 						"path": "stagin/databricks"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ip",
+									"type": "string"
+								},
+								"sink": {
+									"name": "IP",
+									"type": "String"
+								}
+							}
+						]
 					}
 				},
 				"inputs": [
@@ -236,6 +259,61 @@
 							"type": "LinkedServiceReference"
 						},
 						"path": "stagin/databricks"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Timestamp",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "Timestamp",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "IP",
+									"type": "string"
+								},
+								"sink": {
+									"name": "IP",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Device",
+									"type": "string"
+								},
+								"sink": {
+									"name": "Device",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Action",
+									"type": "string"
+								},
+								"sink": {
+									"name": "Action",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Description",
+									"type": "string"
+								},
+								"sink": {
+									"name": "Description",
+									"type": "String"
+								}
+							}
+						]
 					}
 				},
 				"inputs": [
